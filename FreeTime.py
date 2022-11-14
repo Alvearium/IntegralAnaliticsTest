@@ -9,7 +9,9 @@ class Worker:
 
 class FreeTime(Worker):
 
-    def __init__(self, work_time):
+    def __init__(self, work_time, worker):
+        self.first_name = worker.first_name
+        self.last_name = worker.last_name
         self.work_time = [work_time]
         self.free_time = {"monday": self.work_time,
                           "tuesday": self.work_time,
@@ -33,7 +35,7 @@ class FreeTime(Worker):
     @staticmethod
     def _search_slot(work_time, time):
         time = (re.split("-|:|\n", time))
-        if int(time[0]) > 24 or int(time[0] < 0):
+        if int(time[0]) > 24 or int(time[0]) < 0:
             # Аналогичные проверки времени
             print('Введенное время не верное')
             return
@@ -50,7 +52,7 @@ class FreeTime(Worker):
 
 
     def take_a_slot_free_time(self):
-        day = input('Введите день недели: ')
+        day = input('Введите день недели monday, tuesday... : ')
         print('Свободное время в этот день: ', self.free_time[day])
         time = input('Введите интверва времени по типу 13:15-16:45: ')
         slot = self._search_slot(self.free_time[day], time)
@@ -62,20 +64,20 @@ class FreeTime(Worker):
 
                 if int(time[2]) == int(slot_sp[2]) and int(time[3]) == int(slot_sp[3]):
                     self.free_time[day].remove(slot)
-                    return
+                    return self.free_time[day]
                 else:
                     i = self.free_time[day].index(slot)
                     new_slot = time[2] + ':' + time[3] + '-' + slot_sp[2] + ':' + slot_sp[3]
                     self.free_time[day].remove(slot)
                     self.free_time[day].insert(i, new_slot)
-                    return
+                    return self.free_time[day]
 
             elif int(time[2]) == int(slot_sp[2]) and int(time[3]) == int(slot_sp[3]):
                 i = self.free_time[day].index(slot)
                 new_slot = slot_sp[0] + ':' + slot_sp[1] + '-' + time[0] + ':' + time[1]
                 self.free_time[day].remove(slot)
                 self.free_time[day].insert(i, new_slot)
-                return
+                return self.free_time[day]
 
             else:
                 i = self.free_time[day].index(slot)
@@ -87,7 +89,7 @@ class FreeTime(Worker):
                 new_slot_2 = time[2] + ':' + time[3] + '-' + slot_sp[2] + ':' + slot_sp[3]
                 free_time.append(new_slot_2)
                 self.free_time[day] = free_time + free_time_2
-                return
+                return self.free_time[day]
 
 
 

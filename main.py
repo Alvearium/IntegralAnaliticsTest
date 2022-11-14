@@ -20,16 +20,23 @@ def total_time_workers(workers):
 
 
 if __name__ == '__main__':
-    workers = list()
-    for i in range(1):
-        work_time = input('Рабочее время ')
-        worker = FreeTime(work_time)
-        worker.last_name = input('Имя: ')
-        worker.first_name = input('Фамилия: ')
-        workers.append(worker)
+    lst = list()
+    worker_1 = Worker('Иван', 'Иванов', 'Программист')
+    worker_2 = Worker('Петр', 'Петров', 'Cис.Админ')
+    worker_3 = Worker('Роман', 'Романов', 'Дизайнер')
 
-    #total_time_workers(workers)
+    lst.append(FreeTime('9:00-16:00', worker_1))
+    lst.append(FreeTime('9:00-18:00', worker_2))
+    lst.append(FreeTime('9:00-16:00', worker_3))
 
-    while True:
-        workers[0].take_a_slot_free_time()
-        print(worker.free_time)
+    # Нахождение общих слотов
+    total_time_workers(lst)
+
+    # Получение рабочего времени первого сотрудника:
+    print(lst[0].get_work_time())
+
+    # Получение свободных слотов времени второго сотрудника:
+    print(lst[1].get_free_time())
+
+    # Забить слот времени у третьего сотрудника
+    print(lst[2].take_a_slot_free_time())
